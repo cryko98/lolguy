@@ -85,140 +85,205 @@
             50% { opacity: 1; transform: scale(1) translateY(0); }
             100% { opacity: 0; transform: scale(1.5) translateY(-10px); }
         }
+
+        /* Splash screen styles */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f7f7f7;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        #jump-button {
+            position: relative;
+            transition: all 0.3s ease-out;
+            cursor: pointer;
+        }
+        
+        .lol-flash {
+            animation: lol-flash-anim 0.4s forwards;
+            position: absolute;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1a1a1a;
+            z-index: 10;
+        }
+
+        @keyframes lol-flash-anim {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
     </style>
 </head>
-<body class="overflow-x-hidden">
-    <!-- Background Animated LOL texts -->
-    <span class="lol-bg top-1/4 left-1/4 animate-delay-1" style="animation-duration: 15s; font-size: 10rem;">LOL</span>
-    <span class="lol-bg top-1/2 left-3/4 animate-delay-2" style="animation-duration: 12s; font-size: 8rem;">LOL</span>
-    <span class="lol-bg top-2/3 left-1/2 animate-delay-3" style="animation-duration: 18s; font-size: 12rem;">LOL</span>
-    <span class="lol-bg top-1/5 right-1/4 animate-delay-4" style="animation-duration: 14s; font-size: 9rem;">LOL</span>
-    <span class="lol-bg bottom-1/4 left-1/3 animate-delay-5" style="animation-duration: 16s; font-size: 11rem;">LOL</span>
-    <span class="lol-bg bottom-1/3 right-1/5 animate-delay-6" style="animation-duration: 13s; font-size: 7rem;">LOL</span>
-    
-    <!-- Header -->
-    <header class="sticky top-0 z-50 py-4 px-6 md:px-12 flex justify-between items-center header-bg">
-        <!-- Navigation -->
-        <nav class="hidden md:flex space-x-6 handwritten-text text-lg">
-            <a href="#about" class="btn-style">About</a>
-            <a href="#memes" class="btn-style">Memes</a>
-            <a href="#joke-generator" class="btn-style">Joke Generator</a>
-        </nav>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <h1 class="handwritten-text text-5xl md:text-7xl mb-8 fade-in">$LOL</h1>
+        <p id="splash-message" class="handwritten-text text-xl md:text-2xl mb-8 fade-in animate-delay-1">
+            To continue, please click the button below.
+        </p>
         
-        <!-- Right section -->
-        <div class="flex items-center space-x-4 ml-auto">
-            <!-- CA box -->
-            <div class="relative group">
-                <button id="copy-ca" class="btn-style px-4 py-2 rounded-lg handwritten-text text-sm md:text-base border border-black hover:bg-gray-200">
-                    ca: <span id="ca-text">53Xy4g1RJnGR6saaJRDNoo1rYTGZ3W5U321EDdSa5BGD</span>
-                </button>
-                <div id="copy-message" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden bg-black text-white text-xs px-2 py-1 rounded-full whitespace-nowrap z-10 transition-opacity duration-300 opacity-0">Copied!</div>
-            </div>
+        <button id="jump-button" class="btn-style px-8 py-4 bg-black text-white rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800 fade-in animate-delay-2">
+            Click me!
+        </button>
+        
+        <button id="continue-btn" class="btn-style px-8 py-4 bg-green-500 text-white rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-green-600 mt-4 hidden">
+            Continue to Website
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" style="display: none;">
+        <!-- Background Animated LOL texts -->
+        <span class="lol-bg top-1/4 left-1/4 animate-delay-1" style="animation-duration: 15s; font-size: 10rem;">LOL</span>
+        <span class="lol-bg top-1/2 left-3/4 animate-delay-2" style="animation-duration: 12s; font-size: 8rem;">LOL</span>
+        <span class="lol-bg top-2/3 left-1/2 animate-delay-3" style="animation-duration: 18s; font-size: 12rem;">LOL</span>
+        <span class="lol-bg top-1/5 right-1/4 animate-delay-4" style="animation-duration: 14s; font-size: 9rem;">LOL</span>
+        <span class="lol-bg bottom-1/4 left-1/3 animate-delay-5" style="animation-duration: 16s; font-size: 11rem;">LOL</span>
+        <span class="lol-bg bottom-1/3 right-1/5 animate-delay-6" style="animation-duration: 13s; font-size: 7rem;">LOL</span>
+        
+        <!-- Header -->
+        <header class="sticky top-0 z-50 py-4 px-6 md:px-12 flex justify-between items-center header-bg">
+            <!-- Navigation -->
+            <nav class="hidden md:flex space-x-6 handwritten-text text-lg">
+                <a href="#about" class="btn-style">About</a>
+                <a href="#memes" class="btn-style">Memes</a>
+                <a href="#joke-generator" class="btn-style">Joke Generator</a>
+            </nav>
             
-            <!-- X.com logo -->
-            <a href="https://x.com/LolguyOnSolana" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
-                <svg viewBox="0 0 24 24" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-18s833h r-19h59c3"><g><path d="M18.244 2.25h3.308l-7.227 8.261L21.602 22H14.98L8.244 12.256V22H2.98L10.083 11.233L2.254 2.25H8.86L15.418 9.786L18.244 2.25Z" fill="black"></path></g></svg>
-            </a>
-        </div>
-    </header>
-
-    <main class="relative z-10 container mx-auto mt-16 px-6 md:px-12">
-        <!-- Hero section with new logo and text -->
-        <section id="hero" class="text-center mb-24">
-            <!-- Main logo from SVG URL -->
-            <div class="relative w-64 h-64 mx-auto mb-4 fade-in">
-                <img src="https://images.vexels.com/media/users/3/143597/isolated/svg/0626994ef7a02a13ab0f7912889ece0e.svg" alt="LOL Guy Logo" class="w-full h-full object-contain">
-            </div>
-            
-            <!-- LOL text -->
-            <h1 class="handwritten-text text-6xl md:text-8xl font-bold fade-in animate-delay-3">$LOL</h1>
-
-            <!-- Icons from the image -->
-            <div class="flex justify-center items-center space-x-4 mt-6 fade-in animate-delay-4">
-                <a href="https://x.com/LolguyOnSolana" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
-                    <svg viewBox="0 0 0" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-18s833h r-19h59c3"><g><path d="M18.244 2.25h3.308l-7.227 8.261L21.602 22H14.98L8.244 12.256V22H2.98L10.083 11.233L2.254 2.25H8.86L15.418 9.786L18.244 2.25Z" fill="black"></path></g></svg>
-                </a>
-                <a href="https://www.coingecko.com/" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
-                    <img src="https://support.coingecko.com/hc/article_attachments/4499575478169" alt="CoinGecko Logo" class="w-full h-full object-contain">
-                </a>
-                <a href="https://dexscreener.com/" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
-                    <img src="https://images.apifyusercontent.com/JAu0GoIJvy2QxryzlGcdF2aZFhJZlKZBI-xA585gl8A/rs:fill:250:250/cb:1/aHR0cHM6Ly9hcGlmeS1pbWFnZS11cGxvYWRzLXByb2QuczMudXMtZWFzdC0xLmFtYXpvbmF3cy5jb20vSElNQUNaaE9uN1lKNzFkVHUtYWN0b3ItMmZTU2ZtWnJhbVBCTzczT0staUJpaG5GM3BicC1kZXhwbmcucG5n.webp" alt="Dexscreener Logo" class="w-full h-full object-contain">
-                </a>
-            </div>
-            <p class="handwritten-text text-sm mt-2 fade-in animate-delay-5">verified by coingecko</p>
-        </section>
-
-        <!-- About section -->
-        <section id="about" class="mb-24 fade-in animate-delay-6">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <!-- Original text column -->
-                <div class="text-center md:text-left">
-                    <h2 class="handwritten-text text-4xl md:text-5xl mb-4">A Laughter Revolution</h2>
-                    <p class="handwritten-text text-xl md:text-2xl">
-                        Meet LOLGuy, the legendary meme you’ve seen all over the internet! The ultimate symbol of laughter, fun, and trolling culture.
-                    </p>
-                    <p class="handwritten-text text-xl md:text-2xl mt-4">
-                        Join the LOL cult on Solana and LOL your way to the bank.
-                    </p>
+            <!-- Right section -->
+            <div class="flex items-center space-x-4 ml-auto">
+                <!-- CA box -->
+                <div class="relative group">
+                    <button id="copy-ca" class="btn-style px-4 py-2 rounded-lg handwritten-text text-sm md:text-base border border-black hover:bg-gray-200">
+                        ca: <span id="ca-text">53Xy4g1RJnGR6saaJRDNoo1rYTGZ3W5U321EDdSa5BGD</span>
+                    </button>
+                    <div id="copy-message" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden bg-black text-white text-xs px-2 py-1 rounded-full whitespace-nowrap z-10 transition-opacity duration-300 opacity-0">Copied!</div>
                 </div>
-                <!-- New text and image placeholder column -->
-                <div class="text-center md:text-right">
-                    <p class="handwritten-text text-xl md:text-2xl mb-4">
-                        We have CTOd the OG LOLGuy on Solana. As you know, the original always wins! There will be thousands of vamps which will simply bring more attention to us!
-                    </p>
-                    <div class="w-full max-w-lg h-64 mx-auto border-2 border-dashed border-black rounded-lg flex items-center justify-center">
-                         <img src="https://media.tenor.com/I-2DCQWsGEwAAAAM/lol.gif" alt="LOL Guy GIF" class="w-full h-full object-contain">
+                
+                <!-- X.com logo -->
+                <a href="https://x.com/LolguyOnSolana" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-18s833h r-19h59c3"><g><path d="M18.244 2.25h3.308l-7.227 8.261L21.602 22H14.98L8.244 12.256V22H2.98L10.083 11.233L2.254 2.25H8.86L15.418 9.786L18.244 2.25Z" fill="black"></path></g></svg>
+                </a>
+            </div>
+        </header>
+
+        <main class="relative z-10 container mx-auto mt-16 px-6 md:px-12">
+            <!-- Hero section with new logo and text -->
+            <section id="hero" class="text-center mb-24">
+                <!-- Main logo from SVG URL -->
+                <div class="relative w-64 h-64 mx-auto mb-4 fade-in">
+                    <img src="https://images.vexels.com/media/users/3/143597/isolated/svg/0626994ef7a02a13ab0f7912889ece0e.svg" alt="LOL Guy Logo" class="w-full h-full object-contain">
+                </div>
+                
+                <!-- LOL text -->
+                <h1 class="handwritten-text text-6xl md:text-8xl font-bold fade-in animate-delay-3">$LOL</h1>
+
+                <!-- Icons from the image -->
+                <div class="flex justify-center items-center space-x-4 mt-6 fade-in animate-delay-4">
+                    <a href="https://x.com/LolguyOnSolana" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
+                        <svg viewBox="0 0 0" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-18s833h r-19h59c3"><g><path d="M18.244 2.25h3.308l-7.227 8.261L21.602 22H14.98L8.244 12.256V22H2.98L10.083 11.233L2.254 2.25H8.86L15.418 9.786L18.244 2.25Z" fill="black"></path></g></svg>
+                    </a>
+                    <a href="https://www.coingecko.com/" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
+                        <img src="https://support.coingecko.com/hc/article_attachments/4499575478169" alt="CoinGecko Logo" class="w-full h-full object-contain">
+                    </a>
+                    <a href="https://dexscreener.com/" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
+                        <img src="https://images.apifyusercontent.com/JAu0GoIJvy2QxryzlGcdF2aZFhJZlKZBI-xA585gl8A/rs:fill:250:250/cb:1/aHR0cHM6Ly9hcGlmeS1pbWFnZS11cGxvYWRzLXByb2QuczMudXMtZWFzdC0xLmFtYXpvbmF3cy5jb20vSElNQUNaaE9uN1lKNzFkVHUtYWN0b3ItMmZTU2ZtWnJhbVBCTzczT0staUJpaG5GM3BicC1kZXhwbmcucG5n.webp" alt="Dexscreener Logo" class="w-full h-full object-contain">
+                    </a>
+                </div>
+                <p class="handwritten-text text-sm mt-2 fade-in animate-delay-5">verified by coingecko</p>
+            </section>
+
+            <!-- About section -->
+            <section id="about" class="mb-24 fade-in animate-delay-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <!-- Original text column -->
+                    <div class="text-center md:text-left">
+                        <h2 class="handwritten-text text-4xl md:text-5xl mb-4">A Laughter Revolution</h2>
+                        <p class="handwritten-text text-xl md:text-2xl">
+                            Meet LOLGuy, the legendary meme you’ve seen all over the internet! The ultimate symbol of laughter, fun, and trolling culture.
+                        </p>
+                        <p class="handwritten-text text-xl md:text-2xl mt-4">
+                            Join the LOL cult on Solana and LOL your way to the bank.
+                        </p>
+                    </div>
+                    <!-- New text and image placeholder column -->
+                    <div class="text-center md:text-right">
+                        <p class="handwritten-text text-xl md:text-2xl mb-4">
+                            We have CTOd the OG LOLGuy on Solana. As you know, the original always wins! There will be thousands of vamps which will simply bring more attention to us!
+                        </p>
+                        <div class="w-full max-w-lg h-64 mx-auto border-2 border-dashed border-black rounded-lg flex items-center justify-center">
+                            <img src="https://media.tenor.com/I-2DCQWsGEwAAAAM/lol.gif" alt="LOL Guy GIF" class="w-full h-full object-contain">
+                        </div>
                     </div>
                 </div>
-            </div>
+                
+                <!-- Call to Action button -->
+                <div class="text-center mt-12">
+                    <a href="https://raydium.io/swap" target="_blank" class="btn-style inline-block bg-black text-white px-8 py-4 rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800">
+                        BECOME A LOLGUY NOW
+                    </a>
+                </div>
+            </section>
             
-            <!-- Call to Action button -->
-            <div class="text-center mt-12">
-                <a href="https://raydium.io/swap" target="_blank" class="btn-style inline-block bg-black text-white px-8 py-4 rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800">
-                    BECOME A LOLGUY NOW
-                </a>
-            </div>
-        </section>
-        
-        <!-- Memes section -->
-        <section id="memes" class="max-w-6xl mx-auto mb-24">
-            <h2 class="handwritten-text text-center text-4xl md:text-5xl mb-8 fade-in">Memes</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 6 meme images with 1:1 ratio -->
-                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-1">
-                    <img src="https://pbs.twimg.com/media/G1UEmnEXcAEtFQ_?format=jpg&name=small" alt="Meme 1" class="aspect-square w-full object-cover">
+            <!-- Memes section -->
+            <section id="memes" class="max-w-6xl mx-auto mb-24">
+                <h2 class="handwritten-text text-center text-4xl md:text-5xl mb-8 fade-in">Memes</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 6 meme images with 1:1 ratio -->
+                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-1">
+                        <img src="https://storage.googleapis.com/google-pixel-art-generator/image_e5b07f.png" alt="Meme 1" class="aspect-square w-full object-cover">
+                    </div>
+                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-2">
+                        <img src="https://pbs.twimg.com/media/G1Ubr_PWYAAP8NU?format=jpg&name=small" alt="Meme 2" class="aspect-square w-full object-cover">
+                    </div>
+                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-3">
+                        <img src="https://pbs.twimg.com/media/G1NcnX7WcAA75qv?format=jpg&name=small" alt="Meme 3" class="aspect-square w-full object-cover">
+                    </div>
+                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-4">
+                        <img src="https://pbs.twimg.com/media/G1NWjqAaEAApUBf?format=jpg&name=small" alt="Meme 4" class="aspect-square w-full object-cover">
+                    </div>
+                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-5">
+                        <img src="https://pbs.twimg.com/media/G1NzstTXMAAK5Jn?format=jpg&name=small" alt="Meme 5" class="aspect-square w-full object-cover">
+                    </div>
+                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-6">
+                        <img src="https://pbs.twimg.com/media/G1N2CT5XYAAuIVb?format=jpg&name=small" alt="Meme 6" class="aspect-square w-full object-cover">
+                    </div>
                 </div>
-                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-2">
-                    <img src="https://pbs.twimg.com/media/G1Ubr_PWYAAP8NU?format=jpg&name=small" alt="Meme 2" class="aspect-square w-full object-cover">
-                </div>
-                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-3">
-                    <img src="https://pbs.twimg.com/media/G1NcnX7WcAA75qv?format=jpg&name=small" alt="Meme 3" class="aspect-square w-full object-cover">
-                </div>
-                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-4">
-                    <img src="https://pbs.twimg.com/media/G1NWjqAaEAApUBf?format=jpg&name=small" alt="Meme 4" class="aspect-square w-full object-cover">
-                </div>
-                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-5">
-                    <img src="https://pbs.twimg.com/media/G1NzstTXMAAK5Jn?format=jpg&name=small" alt="Meme 5" class="aspect-square w-full object-cover">
-                </div>
-                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-6">
-                    <img src="https://pbs.twimg.com/media/G1N2CT5XYAAuIVb?format=jpg&name=small" alt="Meme 6" class="aspect-square w-full object-cover">
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Joke Generator Section -->
-        <section id="joke-generator" class="max-w-4xl mx-auto text-center mb-24 fade-in animate-delay-3">
-            <h2 class="handwritten-text text-4xl md:text-5xl">Joke Generator</h2>
-            <div id="joke-generator-container" class="relative mt-8 p-6 md:p-8 bg-white border border-black rounded-lg shadow-md">
-                <p id="joke-text" class="handwritten-text text-xl md:text-2xl min-h-[5rem] flex items-center justify-center text-center">
-                    Click the button to get a LOL joke!
-                </p>
-                <button id="generate-joke-btn" class="btn-style inline-block bg-black text-white px-8 py-4 mt-6 rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800">
-                    Get a new joke!
-                </button>
-            </div>
-        </section>
-    </main>
+            <!-- Joke Generator Section -->
+            <section id="joke-generator" class="max-w-4xl mx-auto text-center mb-24 fade-in animate-delay-3">
+                <h2 class="handwritten-text text-4xl md:text-5xl">Joke Generator</h2>
+                <div id="joke-generator-container" class="relative mt-8 p-6 md:p-8 bg-white border border-black rounded-lg shadow-md">
+                    <p id="joke-text" class="handwritten-text text-xl md:text-2xl min-h-[5rem] flex items-center justify-center text-center">
+                        Click the button to get a LOL joke!
+                    </p>
+                    <button id="generate-joke-btn" class="btn-style inline-block bg-black text-white px-8 py-4 mt-6 rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800">
+                        Get a new joke!
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -228,6 +293,63 @@
             const jokeButton = document.getElementById('generate-joke-btn');
             const jokeText = document.getElementById('joke-text');
             const jokeContainer = document.getElementById('joke-generator-container');
+            
+            // Splash screen elements
+            const splashScreen = document.getElementById('splash-screen');
+            const mainContent = document.getElementById('main-content');
+            const jumpButton = document.getElementById('jump-button');
+            const splashMessage = document.getElementById('splash-message');
+            const continueBtn = document.getElementById('continue-btn');
+            let clickCount = 0;
+            const maxClicks = 3;
+
+            // Splash screen logic
+            jumpButton.addEventListener('click', () => {
+                if (clickCount < maxClicks) {
+                    clickCount++;
+
+                    // Make the button jump
+                    const newTop = Math.random() * 80 + 10;
+                    const newLeft = Math.random() * 80 + 10;
+                    jumpButton.style.position = 'absolute';
+                    jumpButton.style.top = `${newTop}%`;
+                    jumpButton.style.left = `${newLeft}%`;
+
+                    // Flash a "LOL!" text
+                    const lolSpan = document.createElement('span');
+                    lolSpan.textContent = 'LOL!';
+                    lolSpan.classList.add('lol-flash');
+                    lolSpan.style.top = `${newTop + 5}%`; // Position near the button
+                    lolSpan.style.left = `${newLeft + 5}%`;
+                    splashScreen.appendChild(lolSpan);
+
+                    setTimeout(() => {
+                        lolSpan.remove();
+                    }, 400);
+
+                    // Final click logic
+                    if (clickCount === maxClicks) {
+                        jumpButton.style.position = 'relative';
+                        jumpButton.style.top = 'auto';
+                        jumpButton.style.left = 'auto';
+                        jumpButton.classList.remove('hover:bg-gray-800');
+                        jumpButton.classList.add('bg-gray-400');
+                        jumpButton.disabled = true;
+                        jumpButton.textContent = "You got it!";
+                        
+                        setTimeout(() => {
+                            splashMessage.textContent = "if you laughed, you are a true lol guy.";
+                            continueBtn.classList.remove('hidden');
+                        }, 500);
+                    }
+
+                }
+            });
+
+            continueBtn.addEventListener('click', () => {
+                splashScreen.style.display = 'none';
+                mainContent.style.display = 'block';
+            });
 
             const jokes = [
                 "Why don't skeletons fight each other? They don't have the guts. LOL!",
