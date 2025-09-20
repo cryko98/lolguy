@@ -131,6 +131,52 @@
                 transform: scale(2);
             }
         }
+
+        /* Minigame styles */
+        #game-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            margin: 0 auto;
+            border: 2px solid #1a1a1a;
+            border-radius: 8px;
+            background-color: #fff;
+            overflow: hidden;
+        }
+
+        .game-target {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            transition: opacity 0.2s ease-out;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .game-target img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .game-target.lol-guy {
+            z-index: 5;
+        }
+        .game-target.troll-guy {
+            z-index: 5;
+        }
+
+        .game-result {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -167,6 +213,7 @@
                 <a href="#about" class="btn-style">About</a>
                 <a href="#memes" class="btn-style">Memes</a>
                 <a href="#joke-generator" class="btn-style">Joke Generator</a>
+                <a href="#minigame" class="btn-style">Minigame</a>
             </nav>
             
             <!-- Right section -->
@@ -205,7 +252,7 @@
                     <a href="https://www.coingecko.com/en/coins/lol-guy" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
                         <img src="https://support.coingecko.com/hc/article_attachments/4499575478169" alt="CoinGecko Logo" class="w-full h-full object-contain">
                     </a>
-                    <a href="https://dexscreener.com/solana/hnmnnj7uvx988rwxjkk8ggwaqsi3e1nueecab763dqys" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
+                    <a href="https://dexscreener.com/solana/hnmnnj7uvx988rwxjkk8ggwaqsi3e1nueecab763dqys/" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
                         <img src="https://images.apifyusercontent.com/JAu0GoIJvy2QxryzlGcdF2aZFhJZlKZBI-xA585gl8A/rs:fill:250:250/cb:1/aHR0cHM6Ly9hcGlmeS1pbWFnZS11cGxvYWRzLXByb2QuczMudXMtZWFzdC0xLmFtYXpvbmF3cy5jb20vSElNQUNaaE9uN1lKNzFkVHUtYWN0b3ItMmZTU2ZtWnJhbVBCTzczT0staUJpaG5GM3BicC1kZXhwbmcucG5n.webp" alt="Dexscreener Logo" class="w-full h-full object-contain">
                     </a>
                 </div>
@@ -250,7 +297,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- 6 meme images with 1:1 ratio -->
                     <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-1">
-                        <img src="https://pbs.twimg.com/media/G1UEmnEXcAEtFQ_?format=jpg&name=small" alt="Meme 1" class="aspect-square w-full object-cover">
+                        <img src="https://storage.googleapis.com/google-pixel-art-generator/image_e5b07f.png" alt="Meme 1" class="aspect-square w-full object-cover">
                     </div>
                     <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-2">
                         <img src="https://pbs.twimg.com/media/G1Ubr_PWYAAP8NU?format=jpg&name=small" alt="Meme 2" class="aspect-square w-full object-cover">
@@ -266,6 +313,23 @@
                     </div>
                     <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-6">
                         <img src="https://pbs.twimg.com/media/G1N2CT5XYAAuIVb?format=jpg&name=small" alt="Meme 6" class="aspect-square w-full object-cover">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Minigame Section -->
+            <section id="minigame" class="max-w-4xl mx-auto text-center mb-24 fade-in animate-delay-3">
+                <h2 class="handwritten-text text-4xl md:text-5xl">LOL Guy Hunter</h2>
+                <div id="game-info" class="mb-4 text-xl md:text-2xl flex justify-center space-x-8">
+                    <p>Score: <span id="score">0</span></p>
+                    <p>Time: <span id="time">30</span></p>
+                </div>
+                <div id="game-container" class="relative">
+                    <div id="game-start-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-200 bg-opacity-90">
+                        <p id="game-message" class="handwritten-text text-2xl md:text-3xl mb-4">Click the LOL Guys, avoid the Trolls!</p>
+                        <button id="start-game-btn" class="btn-style inline-block bg-black text-white px-8 py-4 rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800">
+                            Start Game!
+                        </button>
                     </div>
                 </div>
             </section>
@@ -437,6 +501,102 @@
                     }
                 }
             });
+
+            // Minigame Logic
+            const gameContainer = document.getElementById('game-container');
+            const startGameBtn = document.getElementById('start-game-btn');
+            const gameStartScreen = document.getElementById('game-start-screen');
+            const gameMessage = document.getElementById('game-message');
+            const scoreDisplay = document.getElementById('score');
+            const timeDisplay = document.getElementById('time');
+            
+            let score = 0;
+            let time = 30;
+            let gameInterval;
+            let spawnInterval;
+            
+            const lolGuyImage = 'https://images.vexels.com/media/users/3/143597/isolated/svg/0626994ef7a02a13ab0f7912889ece0e.svg';
+            const trollImages = [
+                'https://toppng.com/uploads/preview/trollface-115507175970pk83porcj.png',
+                'https://pngimg.com/d/trollface_PNG31.png',
+                'https://www.pngfind.com/pngs/m/59-595902_trollface-png-transparent-png.png',
+                'https://w7.pngwing.com/pngs/108/759/png-transparent-rage-comics-meme-trollface-internet-troll-rage-comic-internet-meme-drawing-forever-alone-s-comics-white-vertebrate-thumbnail.png'
+            ];
+
+            const spawnTarget = () => {
+                const isTroll = Math.random() < 0.3; // 30% chance to be a troll
+                const imgUrl = isTroll ? trollImages[Math.floor(Math.random() * trollImages.length)] : lolGuyImage;
+                
+                const target = document.createElement('div');
+                target.classList.add('game-target');
+                if (isTroll) {
+                    target.classList.add('troll-guy');
+                } else {
+                    target.classList.add('lol-guy');
+                }
+                
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                target.appendChild(img);
+
+                const containerRect = gameContainer.getBoundingClientRect();
+                const randomTop = Math.random() * (containerRect.height - 60);
+                const randomLeft = Math.random() * (containerRect.width - 60);
+
+                target.style.top = `${randomTop}px`;
+                target.style.left = `${randomLeft}px`;
+
+                target.addEventListener('click', () => {
+                    if (isTroll) {
+                        endGame('YOU GOT TROLLED! LOL!');
+                    } else {
+                        score++;
+                        scoreDisplay.textContent = score;
+                        target.remove();
+                    }
+                });
+
+                gameContainer.appendChild(target);
+
+                setTimeout(() => {
+                    if (target.parentNode) {
+                        target.remove();
+                    }
+                }, 1500); // Target disappears after 1.5 seconds
+            };
+
+            const startGame = () => {
+                score = 0;
+                time = 30;
+                scoreDisplay.textContent = score;
+                timeDisplay.textContent = time;
+                gameStartScreen.classList.add('hidden');
+                
+                gameInterval = setInterval(() => {
+                    time--;
+                    timeDisplay.textContent = time;
+                    if (time <= 0) {
+                        endGame(`Time's up! Your score is ${score}.`);
+                    }
+                }, 1000);
+
+                spawnInterval = setInterval(spawnTarget, 750); // Spawn a new target every 0.75 seconds
+            };
+
+            const endGame = (message) => {
+                clearInterval(gameInterval);
+                clearInterval(spawnInterval);
+                
+                // Remove all remaining targets
+                const targets = gameContainer.querySelectorAll('.game-target');
+                targets.forEach(target => target.remove());
+
+                gameMessage.textContent = message;
+                startGameBtn.textContent = 'Play Again?';
+                gameStartScreen.classList.remove('hidden');
+            };
+
+            startGameBtn.addEventListener('click', startGame);
 
             // Scroll animation
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
