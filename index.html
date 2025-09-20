@@ -21,6 +21,7 @@
             -moz-osx-font-smoothing: grayscale;
             position: relative;
             overflow-x: hidden;
+            font-size: 16px; /* Base font size for better readability */
         }
         .handwritten-text {
             font-family: var(--font-family-handwritten);
@@ -73,6 +74,17 @@
             pointer-events: none;
             animation: float 10s ease-in-out infinite;
         }
+        
+        /* Joke Generator specific styles */
+        .joke-flash-lol {
+            animation: flash-lol 0.5s ease-out forwards;
+        }
+
+        @keyframes flash-lol {
+            0% { opacity: 0; transform: scale(0.5) translateY(10px); }
+            50% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(1.5) translateY(-10px); }
+        }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -90,7 +102,7 @@
         <nav class="hidden md:flex space-x-6 handwritten-text text-lg">
             <a href="#about" class="btn-style">About</a>
             <a href="#memes" class="btn-style">Memes</a>
-            <a href="#roadmap" class="btn-style">Roadmap</a>
+            <a href="#joke-generator" class="btn-style">Joke Generator</a>
         </nav>
         
         <!-- Right section -->
@@ -172,32 +184,39 @@
         <section id="memes" class="max-w-6xl mx-auto mb-24">
             <h2 class="handwritten-text text-center text-4xl md:text-5xl mb-8 fade-in">Memes</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 6 meme placeholders -->
-                <div class="w-full h-64 border border-black rounded-lg overflow-hidden flex items-center justify-center fade-in animate-delay-1">
-                    <img src="https://pbs.twimg.com/media/G1UEmnEXcAEtFQ_?format=jpg&name=small" alt="Meme 1" class="w-full h-full object-cover">
+                <!-- 6 meme images with 1:1 ratio -->
+                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-1">
+                    <img src="https://pbs.twimg.com/media/G1UEmnEXcAEtFQ_?format=jpg&name=small" alt="Meme 1" class="aspect-square w-full object-cover">
                 </div>
-                <div class="w-full h-64 border border-black rounded-lg overflow-hidden flex items-center justify-center fade-in animate-delay-2">
-                    <img src="https://pbs.twimg.com/media/G1Ubr_PWYAAP8NU?format=jpg&name=small" alt="Meme 2" class="w-full h-full object-cover">
+                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-2">
+                    <img src="https://pbs.twimg.com/media/G1Ubr_PWYAAP8NU?format=jpg&name=small" alt="Meme 2" class="aspect-square w-full object-cover">
                 </div>
-                <div class="w-full h-64 border border-black rounded-lg overflow-hidden flex items-center justify-center fade-in animate-delay-3">
-                    <img src="https://pbs.twimg.com/media/G1NcnX7WcAA75qv?format=jpg&name=small" alt="Meme 3" class="w-full h-full object-cover">
+                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-3">
+                    <img src="https://pbs.twimg.com/media/G1NcnX7WcAA75qv?format=jpg&name=small" alt="Meme 3" class="aspect-square w-full object-cover">
                 </div>
-                <div class="w-full h-64 border border-black rounded-lg overflow-hidden flex items-center justify-center fade-in animate-delay-4">
-                    <img src="https://pbs.twimg.com/media/G1NWjqAaEAApUBf?format=jpg&name=small" alt="Meme 4" class="w-full h-full object-cover">
+                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-4">
+                    <img src="https://pbs.twimg.com/media/G1NWjqAaEAApUBf?format=jpg&name=small" alt="Meme 4" class="aspect-square w-full object-cover">
                 </div>
-                <div class="w-full h-64 border border-black rounded-lg overflow-hidden flex items-center justify-center fade-in animate-delay-5">
-                    <img src="https://pbs.twimg.com/media/G1NzstTXMAAK5Jn?format=jpg&name=small" alt="Meme 5" class="w-full h-full object-cover">
+                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-5">
+                    <img src="https://pbs.twimg.com/media/G1NzstTXMAAK5Jn?format=jpg&name=small" alt="Meme 5" class="aspect-square w-full object-cover">
                 </div>
-                <div class="w-full h-64 border border-black rounded-lg overflow-hidden flex items-center justify-center fade-in animate-delay-6">
-                    <img src="https://pbs.twimg.com/media/G1N2CT5XYAAuIVb?format=jpg&name=small" alt="Meme 6" class="w-full h-full object-cover">
+                <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-6">
+                    <img src="https://pbs.twimg.com/media/G1N2CT5XYAAuIVb?format=jpg&name=small" alt="Meme 6" class="aspect-square w-full object-cover">
                 </div>
             </div>
         </section>
 
-        <!-- Placeholder for Roadmap section -->
-        <section id="roadmap" class="max-w-4xl mx-auto text-center mb-24 fade-in animate-delay-3">
-            <h2 class="handwritten-text text-4xl md:text-5xl">Roadmap</h2>
-            <p class="handwritten-text text-xl md:text-2xl mt-4">This section will contain the roadmap with phases and milestones.</p>
+        <!-- Joke Generator Section -->
+        <section id="joke-generator" class="max-w-4xl mx-auto text-center mb-24 fade-in animate-delay-3">
+            <h2 class="handwritten-text text-4xl md:text-5xl">Joke Generator</h2>
+            <div id="joke-generator-container" class="relative mt-8 p-6 md:p-8 bg-white border border-black rounded-lg shadow-md">
+                <p id="joke-text" class="handwritten-text text-xl md:text-2xl min-h-[5rem] flex items-center justify-center text-center">
+                    Click the button to get a LOL joke!
+                </p>
+                <button id="generate-joke-btn" class="btn-style inline-block bg-black text-white px-8 py-4 mt-6 rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800">
+                    Get a new joke!
+                </button>
+            </div>
         </section>
     </main>
 
@@ -206,7 +225,35 @@
             const copyButton = document.getElementById('copy-ca');
             const caTextSpan = document.getElementById('ca-text');
             const copyMessage = document.getElementById('copy-message');
+            const jokeButton = document.getElementById('generate-joke-btn');
+            const jokeText = document.getElementById('joke-text');
+            const jokeContainer = document.getElementById('joke-generator-container');
 
+            const jokes = [
+                "Why don't skeletons fight each other? They don't have the guts. LOL!",
+                "What did one ocean say to the other ocean? Nothing, they just waved. LOL!",
+                "Why was the JavaScript developer sad? Because he didn't get arrays. LOL!",
+                "Why do programmers prefer dark mode? Because light attracts bugs. LOL!",
+                "What do you call a fake noodle? An Impasta. LOL!",
+                "I'm reading a book on anti-gravity. It's impossible to put down. LOL!",
+                "Why did the scarecrow win an award? Because he was outstanding in his field. LOL!",
+                "Why did the bicycle fall over? Because it was two tired. LOL!",
+                "What's a ghost's favorite fruit? Booberries. LOL!",
+                "Why did the man get fired from the calendar factory? He took a couple of days off. LOL!",
+                "What did the grape say when it was stepped on? Nothing, it just let out a little wine. LOL!",
+                "Why did the mushroom go to the party? Because he was a fungi. LOL!",
+                "Why did the tomato turn red? Because it saw the salad dressing. LOL!",
+                "What's the best thing about Switzerland? I don't know, but the flag is a big plus. LOL!",
+                "Did you hear about the restaurant on the moon? Great food, no atmosphere. LOL!",
+                "What do you call a sleeping bull? A bulldozer. LOL!",
+                "What do you call a fish with no eyes? A fsh. LOL!",
+                "I told my wife she was drawing her eyebrows too high. She looked surprised. LOL!",
+                "My boss told me to have a good day, so I went home. LOL!",
+                "Why can't you give Elsa a balloon? Because she will let it go, let it go. LOL!"
+            ];
+
+            let availableJokes = [...jokes];
+            
             // Copy function
             copyButton.addEventListener('click', async () => {
                 const caText = caTextSpan.textContent;
@@ -231,6 +278,41 @@
 
                 } catch (err) {
                     console.error('Failed to copy: ', err);
+                }
+            });
+
+            // Function to flash "LOL!" text
+            function flashLols() {
+                const numberOfLols = 5 + Math.floor(Math.random() * 5); // 5 to 9 LOLs
+                for (let i = 0; i < numberOfLols; i++) {
+                    const lolSpan = document.createElement('span');
+                    lolSpan.textContent = 'LOL!';
+                    lolSpan.classList.add('absolute', 'handwritten-text', 'text-2xl', 'font-bold', 'joke-flash-lol');
+                    lolSpan.style.top = `${Math.random() * 100}%`;
+                    lolSpan.style.left = `${Math.random() * 100}%`;
+                    lolSpan.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
+                    
+                    jokeContainer.appendChild(lolSpan);
+
+                    setTimeout(() => {
+                        lolSpan.remove();
+                    }, 500); // Match animation duration
+                }
+            }
+
+            // Joke Generator function
+            jokeButton.addEventListener('click', () => {
+                flashLols(); // Flash LOLs on button click
+                
+                if (availableJokes.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * availableJokes.length);
+                    const joke = availableJokes[randomIndex];
+                    jokeText.textContent = joke;
+                    availableJokes.splice(randomIndex, 1);
+                    if (availableJokes.length === 0) {
+                        jokeButton.textContent = "No more jokes available for now.";
+                        jokeButton.disabled = true;
+                    }
                 }
             });
 
