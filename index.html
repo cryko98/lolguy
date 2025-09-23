@@ -14,28 +14,29 @@
         }
         body {
             font-family: var(--font-family-handwritten);
-            background-color: #f7f7f7;
+            background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
             color: #1a1a1a;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             position: relative;
             overflow-x: hidden;
-            font-size: 16px; /* Base font size for better readability */
+            font-size: 16px;
         }
         .handwritten-text {
             font-family: var(--font-family-handwritten);
         }
         .header-bg {
-            background-color: #fff;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         .btn-style {
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .btn-style:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -76,10 +77,6 @@
         }
         
         /* Joke Generator specific styles */
-        .joke-flash-lol {
-            animation: flash-lol 0.5s ease-out forwards;
-        }
-
         @keyframes flash-lol {
             0% { opacity: 0; transform: scale(0.5) translateY(10px); }
             50% { opacity: 1; transform: scale(1) translateY(0); }
@@ -93,7 +90,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #f7f7f7;
+            background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
             z-index: 100;
             display: flex;
             align-items: center;
@@ -106,6 +103,19 @@
             position: relative;
             transition: all 0.3s ease-out;
             cursor: pointer;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
         }
         
         .lol-flash {
@@ -143,15 +153,20 @@
             border-radius: 8px;
             background-color: #fff;
             overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
         .game-target {
             position: absolute;
             width: 60px;
             height: 60px;
-            transition: opacity 0.2s ease-out;
+            transition: transform 0.2s ease-out;
             cursor: pointer;
             border-radius: 50%;
+        }
+
+        .game-target:hover {
+            transform: scale(1.1);
         }
 
         .game-target img {
@@ -166,17 +181,9 @@
         .game-target.troll-guy {
             z-index: 5;
         }
-
-        .game-result {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-align: center;
-            z-index: 10;
-        }
+        
+        /* Dexscreener embed styles */
+        #dexscreener-embed{position:relative;width:100%;padding-bottom:125%;}@media(min-width:1400px){#dexscreener-embed{padding-bottom:65%;}}#dexscreener-embed iframe{position:absolute;width:100%;height:100%;top:0;left:0;border:0;}
     </style>
 </head>
 <body>
@@ -214,6 +221,7 @@
                 <a href="#memes" class="btn-style">Memes</a>
                 <a href="#joke-generator" class="btn-style">Joke Generator</a>
                 <a href="#minigame" class="btn-style">Minigame</a>
+                <a href="#dexscreener-chart" class="btn-style">Live Chart</a>
             </nav>
             
             <!-- Right section -->
@@ -247,7 +255,7 @@
                 <!-- Icons from the image -->
                 <div class="flex justify-center items-center space-x-4 mt-6 fade-in animate-delay-4">
                     <a href="https://x.com/lolguy_lol_" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
-                        <svg viewBox="0 0 0" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-18s833h r-19h59c3"><g><path d="M18.244 2.25h3.308l-7.227 8.261L21.602 22H14.98L8.244 12.256V22H2.98L10.083 11.233L2.254 2.25H8.86L15.418 9.786L18.244 2.25Z" fill="black"></path></g></svg>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-18s833h r-19h59c3"><g><path d="M18.244 2.25h3.308l-7.227 8.261L21.602 22H14.98L8.244 12.256V22H2.98L10.083 11.233L2.254 2.25H8.86L15.418 9.786L18.244 2.25Z" fill="black"></path></g></svg>
                     </a>
                     <a href="https://www.coingecko.com/en/coins/lol-guy" target="_blank" class="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 transform hover:scale-110">
                         <img src="https://support.coingecko.com/hc/article_attachments/4499575478169" alt="CoinGecko Logo" class="w-full h-full object-contain">
@@ -277,15 +285,15 @@
                         <p class="handwritten-text text-xl md:text-2xl mb-4">
                             We have CTOd the OG LOLGuy on Solana. As you know, the original always wins! There will be thousands of vamps which will simply bring more attention to us!
                         </p>
-                        <div class="w-full max-w-lg h-64 mx-auto border-2 border-dashed border-black rounded-lg flex items-center justify-center">
-                            <img src="https://media.tenor.com/I-2DCQWsGEwAAAAM/lol.gif" alt="LOL Guy GIF" class="w-full h-full object-contain">
+                        <div class="w-full max-w-lg h-64 mx-auto border-2 border-black rounded-lg flex items-center justify-center relative overflow-hidden">
+                            <img src="https://media.tenor.com/I-2DCQWsGEwAAAAM/lol.gif" alt="LOL Guy GIF" class="w-full h-full object-contain transform transition-transform duration-300 hover:scale-110">
                         </div>
                     </div>
                 </div>
                 
                 <!-- Call to Action button -->
                 <div class="text-center mt-12">
-                    <a href="https://raydium.io/swap" target="_blank" class="btn-style inline-block bg-black text-white px-8 py-4 rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800">
+                    <a href="https://dexscreener.com/solana/hnmnnj7uvx988rwxjkk8ggwaqsi3e1nueecab763dqys" target="_blank" class="btn-style inline-block bg-black text-white px-8 py-4 rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800">
                         BECOME A LOLGUY NOW
                     </a>
                 </div>
@@ -296,23 +304,101 @@
                 <h2 class="handwritten-text text-center text-4xl md:text-5xl mb-8 fade-in">Memes</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- 6 meme images with 1:1 ratio -->
-                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-1">
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-1 group transform transition-transform duration-300 hover:scale-105">
                         <img src="https://pbs.twimg.com/media/G1UEmnEXcAEtFQ_?format=jpg&name=small" alt="Meme 1" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                        </div>
                     </div>
-                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-2">
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-2 group transform transition-transform duration-300 hover:scale-105">
                         <img src="https://pbs.twimg.com/media/G1Ubr_PWYAAP8NU?format=jpg&name=small" alt="Meme 2" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                        </div>
                     </div>
-                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-3">
-                        <img src="https://pbs.twimg.com/media/G1NcnX7WcAA75qv?format=jpg&name=small" alt="Meme 3" class="aspect-square w-full object-cover">
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-3 group transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://pbs.twimg.com/media/GzCtk81WcAIAEKy?format=jpg&name=small
+
+
+
+" alt="Meme 3" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                        </div>
                     </div>
-                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-4">
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-4 group transform transition-transform duration-300 hover:scale-105">
                         <img src="https://pbs.twimg.com/media/G1NWjqAaEAApUBf?format=jpg&name=small" alt="Meme 4" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                             </div>
                     </div>
-                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-5">
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-3 group transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://pbs.twimg.com/media/G1NcnX7WcAA75qv?format=jpg&name=small" alt="Meme 3" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                        </div>
+                    </div>
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-5 group transform transition-transform duration-300 hover:scale-105">
                         <img src="https://pbs.twimg.com/media/G1NzstTXMAAK5Jn?format=jpg&name=small" alt="Meme 5" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                        </div>
                     </div>
-                    <div class="border border-black rounded-lg overflow-hidden fade-in animate-delay-6">
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-6 group transform transition-transform duration-300 hover:scale-105">
                         <img src="https://pbs.twimg.com/media/G1N2CT5XYAAuIVb?format=jpg&name=small" alt="Meme 6" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                            </div>
+                    </div>
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-3 group transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://pbs.twimg.com/media/G0Gn7oAXIAATE3_?format=jpg&name=small
+
+" alt="Meme 3" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                            </div>
+                    </div>
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-3 group transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://pbs.twimg.com/media/G1aCf2GXQAA97Cn?format=jpg&name=small
+
+" alt="Meme 3" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                            </div>
+                    </div>
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-3 group transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://pbs.twimg.com/media/G1cmVgwXYAApVix?format=jpg&name=small
+
+" alt="Meme 3" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                            </div>
+                    </div>
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-3 group transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://pbs.twimg.com/media/G1d-EZqXcAAe8az?format=jpg&name=small
+
+" alt="Meme 3" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                            </div>
+                    </div>
+                    <div class="relative border border-black rounded-lg overflow-hidden fade-in animate-delay-3 group transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://pbs.twimg.com/media/G1fY7HjWkAAWJbu?format=jpg&name=small
+
+" alt="Meme 3" class="aspect-square w-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white text-3xl font-bold">LOL!</span>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -337,13 +423,21 @@
             <!-- Joke Generator Section -->
             <section id="joke-generator" class="max-w-4xl mx-auto text-center mb-24 fade-in animate-delay-3">
                 <h2 class="handwritten-text text-4xl md:text-5xl">Joke Generator</h2>
-                <div id="joke-generator-container" class="relative mt-8 p-6 md:p-8 bg-white border border-black rounded-lg shadow-md">
+                <div id="joke-generator-container" class="relative mt-8 p-6 md:p-8 bg-white border border-black rounded-lg shadow-lg">
                     <p id="joke-text" class="handwritten-text text-xl md:text-2xl min-h-[5rem] flex items-center justify-center text-center">
                         Click the button to get a LOL joke!
                     </p>
                     <button id="generate-joke-btn" class="btn-style inline-block bg-black text-white px-8 py-4 mt-6 rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800">
                         Get a new joke!
                     </button>
+                </div>
+            </section>
+            
+            <!-- Dexscreener Live Chart Section -->
+            <section id="dexscreener-chart" class="max-w-6xl mx-auto mt-16 px-6 md:px-12 mb-24">
+                <h2 class="handwritten-text text-4xl md:text-5xl text-center mb-8">Live Chart</h2>
+                <div id="dexscreener-embed">
+                    <iframe src="https://dexscreener.com/solana/HNMnNj7Uvx988rWxjkK8gGWAQSi3E1nuEEcAb763dQyS?embed=1&loadChartSettings=0&chartLeftToolbar=0&chartTheme=dark&theme=dark&chartStyle=0&chartType=usd&interval=15"></iframe>
                 </div>
             </section>
         </main>
@@ -598,7 +692,7 @@
 
             startGameBtn.addEventListener('click', startGame);
 
-            // Scroll animation
+            // Smooth scroll function
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
