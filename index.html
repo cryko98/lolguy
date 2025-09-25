@@ -188,8 +188,24 @@
     </style>
 </head>
 <body>
-       <!-- Main Content -->
-    <div id="main-content">
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <h1 class="handwritten-text text-5xl md:text-7xl mb-8 fade-in">$LOL</h1>
+        <p id="splash-message" class="handwritten-text text-xl md:text-2xl mb-8 fade-in animate-delay-1">
+            To continue, please click the button below.
+        </p>
+        
+        <button id="jump-button" class="btn-style px-8 py-4 bg-black text-white rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-gray-800 fade-in animate-delay-2">
+            Click me!
+        </button>
+        
+        <button id="continue-btn" class="btn-style px-8 py-4 bg-green-500 text-white rounded-lg handwritten-text text-xl md:text-2xl font-bold hover:bg-green-600 mt-4 hidden">
+            Continue to Website
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" style="display: none;">
         <!-- Background Animated LOL texts -->
         <span class="lol-bg top-1/4 left-1/4 animate-delay-1" style="animation-duration: 15s; font-size: 10rem;">LOL</span>
         <span class="lol-bg top-1/2 left-3/4 animate-delay-2" style="animation-duration: 12s; font-size: 8rem;">LOL</span>
@@ -413,7 +429,48 @@
             let clickCount = 0;
             const maxClicks = 3;
 
-            
+            // Splash screen logic
+            jumpButton.addEventListener('click', () => {
+                if (clickCount < maxClicks) {
+                    clickCount++;
+
+                    // Make the button jump
+                    const newTop = Math.random() * 80 + 10;
+                    const newLeft = Math.random() * 80 + 10;
+                    jumpButton.style.position = 'absolute';
+                    jumpButton.style.top = `${newTop}%`;
+                    jumpButton.style.left = `${newLeft}%`;
+
+                    // Flash a "LOL!" text
+                    const lolSpan = document.createElement('span');
+                    lolSpan.textContent = 'LOL!';
+                    lolSpan.classList.add('lol-flash');
+                    lolSpan.style.top = `${newTop + 5}%`; // Position near the button
+                    lolSpan.style.left = `${newLeft + 5}%`;
+                    splashScreen.appendChild(lolSpan);
+
+                    setTimeout(() => {
+                        lolSpan.remove();
+                    }, 400);
+
+                    // Final click logic
+                    if (clickCount === maxClicks) {
+                        jumpButton.style.position = 'relative';
+                        jumpButton.style.top = 'auto';
+                        jumpButton.style.left = 'auto';
+                        jumpButton.classList.remove('hover:bg-gray-800');
+                        jumpButton.classList.add('bg-gray-400');
+                        jumpButton.disabled = true;
+                        jumpButton.textContent = "You got it!";
+                        
+                        setTimeout(() => {
+                            splashMessage.textContent = "if you laughed, you are a true lol guy.";
+                            continueBtn.classList.remove('hidden');
+                        }, 500);
+                    }
+
+                }
+            });
 
             continueBtn.addEventListener('click', () => {
                 splashScreen.style.display = 'none';
